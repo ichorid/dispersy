@@ -1,7 +1,6 @@
 from ..taskmanager import TaskManager
 from ..util import blocking_call_on_reactor_thread
 from .dispersytestclass import DispersyTestFunc
-from nose.tools import assert_raises
 from twisted.internet import reactor
 from twisted.internet.defer import Deferred
 from twisted.internet.task import Clock, LoopingCall

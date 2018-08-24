@@ -4,7 +4,6 @@ from time import time
 from unittest import skipUnless
 import logging
 
-from nose.twistedtools import reactor
 from twisted.internet.defer import inlineCallbacks
 from twisted.internet.task import deferLater
 

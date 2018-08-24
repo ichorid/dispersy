@@ -42,7 +42,6 @@ if "twisted.internet.reactor" in sys.modules.keys():
     """ Tribler already imported the reactor. """
     from twisted.internet import reactor
 else:
-    from nose.twistedtools import reactor
 
 #
 # __init__.py ends here

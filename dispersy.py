@@ -445,6 +445,7 @@ class Dispersy(TaskManager):
     def get_progress_handlers(self):
         return self._progress_handlers
 
+    @blocking_call_on_reactor_thread
     def get_member(self, mid="", public_key="", private_key=""):
         """Returns a Member instance associated with public_key.
 

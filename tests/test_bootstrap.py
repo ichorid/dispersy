@@ -8,7 +8,6 @@ from time import time, sleep
 from unittest import skip, skipUnless
 import logging
 
-from nose.twistedtools import reactor
 from twisted.internet.defer import Deferred, inlineCallbacks, returnValue
 from twisted.internet.task import deferLater
 

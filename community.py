@@ -20,6 +20,7 @@ from twisted.internet.defer import inlineCallbacks
 from twisted.internet.task import LoopingCall, deferLater
 from twisted.python.threadable import isInIOThread
 
+from .util import blocking_call_on_reactor_thread
 from .authentication import NoAuthentication, MemberAuthentication, DoubleMemberAuthentication
 from .bloomfilter import BloomFilter
 from .candidate import Candidate, WalkCandidate
@@ -185,6 +186,7 @@ class Community(TaskManager):
                                 (cls.get_classification(),)))]
 
     @classmethod
+    @blocking_call_on_reactor_thread
     def init_community(cls, dispersy, master, my_member, *args, **kargs):
         """
         Initializes a new community, using master as the identifier and my_member as the
