@@ -14,3 +14,5 @@
 /tests/.noseids
 \#*\#
 /docs/_build/
+_trial_temp/
+_trial_temp*
