@@ -15,7 +15,6 @@ from ..candidate import Candidate
 from ..dispersy import Dispersy
 from ..endpoint import StandaloneEndpoint
 from ..message import Message, DropMessage
-from ..util import blockingCallFromThread, blocking_call_on_reactor_thread
 from .debugcommunity.community import DebugCommunity
 from .dispersytestclass import DispersyTestFunc
 
@@ -130,7 +129,6 @@ class PingCommunity(DebugCommunity):
 
 class TestBootstrapServers(DispersyTestFunc):
 
-    @blocking_call_on_reactor_thread
     @inlineCallbacks
     def test_tracker(self):
         """
@@ -211,7 +209,6 @@ class TestBootstrapServers(DispersyTestFunc):
             self.assertEqual(tracker.wait(), 0), tracker.returncode
 
     @skipUnless(environ.get("TEST_BOOTSTRAP") == "yes", "This 'unittest' tests the external bootstrap processes, as such, this is not part of the code review process")
-    @blocking_call_on_reactor_thread
     @inlineCallbacks
     def test_bootstrap_servers_are_up(self):
         """

@@ -11,7 +11,6 @@ from twisted.logger import formatEvent, globalLogPublisher, LogLevel
 from ..discovery.community import PEERCACHE_FILENAME
 from ..dispersy import Dispersy
 from ..endpoint import ManualEnpoint
-from ..util import blocking_call_on_reactor_thread
 from .debugcommunity.community import DebugCommunity
 from .debugcommunity.node import DebugNode
 
@@ -39,7 +38,6 @@ class DispersyTestFunc(TestCase):
         if evt.get("failure", None):
             self._fired_unhandled_exceptions.append(formatEvent(evt))
 
-    @blocking_call_on_reactor_thread
     @inlineCallbacks
     def setUp(self):
         self._starting_threads = [t.name for t in threading.enumerate()]
@@ -60,7 +58,6 @@ class DispersyTestFunc(TestCase):
 
         globalLogPublisher.addObserver(self.failure_check)
 
-    @blocking_call_on_reactor_thread
     @inlineCallbacks
     def tearDown(self):
         super(DispersyTestFunc, self).tearDown()
@@ -100,7 +97,6 @@ class DispersyTestFunc(TestCase):
                 self._logger.error("Found rogue thread: %s", thread)
         self.assertFalse(rogue_threads, "Rogue threads active, see log")
 
-    @blocking_call_on_reactor_thread
     @inlineCallbacks
     def create_nodes(self, amount=1, store_identity=True, tunnel=False, community_class=DebugCommunity,
                      autoload_discovery=False, memory_database=True):

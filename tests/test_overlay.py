@@ -10,7 +10,6 @@ from twisted.internet.task import deferLater
 from ..conversion import DefaultConversion
 from ..dispersy import Dispersy
 from ..endpoint import StandaloneEndpoint
-from ..util import blocking_call_on_reactor_thread
 from .debugcommunity.community import DebugCommunity
 from .debugcommunity.conversion import DebugCommunityConversion
 from .dispersytestclass import DispersyTestFunc
@@ -21,7 +20,6 @@ summary_logger = logging.getLogger("test-overlay-summary")
 
 class TestOverlay(DispersyTestFunc):
 
-    @blocking_call_on_reactor_thread
     @inlineCallbacks
     def setUp(self):
         yield super(DispersyTestFunc, self).setUp()
@@ -40,7 +38,6 @@ class TestOverlay(DispersyTestFunc):
                                        version="\x01",
                                        enable_fast_walker=True)
 
-    @blocking_call_on_reactor_thread
     @inlineCallbacks
     def check_live_overlay(self, cid_hex, version, enable_fast_walker):
         class Conversion(DebugCommunityConversion):

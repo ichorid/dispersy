@@ -1,5 +1,4 @@
 from ..taskmanager import TaskManager
-from ..util import blocking_call_on_reactor_thread
 from .dispersytestclass import DispersyTestFunc
 from twisted.internet import reactor
 from twisted.internet.defer import Deferred
@@ -8,7 +7,6 @@ from twisted.internet.task import Clock, LoopingCall
 
 class TaskManagerTestFunc(DispersyTestFunc):
 
-    @blocking_call_on_reactor_thread
     def setUp(self):
         super(TaskManagerTestFunc, self).setUp()
 
@@ -23,42 +21,34 @@ class TaskManagerTestFunc(DispersyTestFunc):
 
         DispersyTestFunc.tearDown(self)
 
-    @blocking_call_on_reactor_thread
     def test_call_later(self):
         self.tm.register_task("test", reactor.callLater(10, self.do_nothing))
         assert self.tm.is_pending_task_active("test")
 
-    @blocking_call_on_reactor_thread
     def test_call_later_and_cancel(self):
         self.tm.register_task("test", reactor.callLater(10, self.do_nothing))
         self.tm.cancel_pending_task("test")
         assert not self.tm.is_pending_task_active("test")
 
-    @blocking_call_on_reactor_thread
     def test_looping_call(self):
         self.tm.register_task("test", LoopingCall(self.do_nothing)).start(10, now=True)
         assert self.tm.is_pending_task_active("test")
 
-    @blocking_call_on_reactor_thread
     def test_looping_call_and_cancel(self):
         self.tm.register_task("test", LoopingCall(self.do_nothing)).start(10, now=True)
         self.tm.cancel_pending_task("test")
         assert not self.tm.is_pending_task_active("test")
 
-    @blocking_call_on_reactor_thread
     def test_delayed_looping_call_requires_interval(self):
         assert_raises(ValueError, self.tm.register_task, "test", LoopingCall(self.do_nothing), delay=1)
 
-    @blocking_call_on_reactor_thread
     def test_delayed_deferred_requires_value(self):
         assert_raises(ValueError, self.tm.register_task, "test", LoopingCall(self.do_nothing), delay=1)
 
-    @blocking_call_on_reactor_thread
     def test_delayed_looping_call_requires_LoopingCall_or_Deferred(self):
         assert_raises(ValueError, self.tm.register_task, "test not Deferred nor LoopingCall",
                       self.tm._reactor.callLater(0, self.do_nothing), delay=1)
 
-    @blocking_call_on_reactor_thread
     def test_delayed_looping_call_register_and_cancel_pre_delay(self):
         self.assertFalse(self.tm.is_pending_task_active("test"))
         self.tm.register_task("test", LoopingCall(self.do_nothing), delay=1, interval=1)
@@ -66,7 +56,6 @@ class TaskManagerTestFunc(DispersyTestFunc):
         self.tm.cancel_pending_task("test")
         self.assertFalse(self.tm.is_pending_task_active("test"))
 
-    @blocking_call_on_reactor_thread
     def test_delayed_looping_call_register_wait_and_cancel(self):
         self.assertFalse(self.tm.is_pending_task_active("test"))
         lc = LoopingCall(self.count)
@@ -86,7 +75,6 @@ class TaskManagerTestFunc(DispersyTestFunc):
         self.tm._reactor.advance(10)
         self.assertEquals(2, self.counter)
 
-    @blocking_call_on_reactor_thread
     def test_delayed_deferred(self):
         self.assertFalse(self.tm.is_pending_task_active("test"))
         d = Deferred()

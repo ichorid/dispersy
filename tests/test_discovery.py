@@ -4,12 +4,10 @@ from ..discovery.community import DiscoveryCommunity, BOOTSTRAP_FILE_ENVNAME
 from ..discovery.bootstrap import _DEFAULT_ADDRESSES
 import os
 import time
-from ..util import blocking_call_on_reactor_thread
 
 
 class TestDiscovery(DispersyTestFunc):
 
-    @blocking_call_on_reactor_thread
     @inlineCallbacks
     def setUp(self):
         while _DEFAULT_ADDRESSES:
