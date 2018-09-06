@@ -19,7 +19,7 @@ class TaskManagerTestFunc(DispersyTestFunc):
     def tearDown(self):
         self.tm.cancel_all_pending_tasks()
 
-        DispersyTestFunc.tearDown(self)
+        super(TaskManagerTestFunc, self).tearDown()
 
     def test_call_later(self):
         self.tm.register_task("test", reactor.callLater(10, self.do_nothing))

@@ -17,10 +17,10 @@ class TestDatabase(TestCase):
             os.mkdir(self.TMP_DATA_DIR)
 
     def tearDown(self):
-        super(TestDatabase, self).tearDown()
         # Delete the database file if not using an in-memory database.
         if os.path.exists(self.TMP_DATA_DIR):
             shutil.rmtree(self.TMP_DATA_DIR, ignore_errors=True)
+        super(TestDatabase, self).tearDown()
 
     def test_unsupported_database_version(self):
         minimum_version_path = os.path.abspath(os.path.join(self.TEST_DATA_DIR, u"dispersy_v1.db"))

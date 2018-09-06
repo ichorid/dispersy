@@ -60,8 +60,6 @@ class DispersyTestFunc(TestCase):
 
     @inlineCallbacks
     def tearDown(self):
-        super(DispersyTestFunc, self).tearDown()
-
         for dispersy in self.dispersy_objects:
             yield dispersy.stop()
 
@@ -96,6 +94,8 @@ class DispersyTestFunc(TestCase):
                 rogue_threads = True
                 self._logger.error("Found rogue thread: %s", thread)
         self.assertFalse(rogue_threads, "Rogue threads active, see log")
+
+        super(DispersyTestFunc, self).tearDown()
 
     @inlineCallbacks
     def create_nodes(self, amount=1, store_identity=True, tunnel=False, community_class=DebugCommunity,
